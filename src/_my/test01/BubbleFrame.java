@@ -1,4 +1,7 @@
-package test_01;
+package _my.test01;
+
+import test01.Enemy;
+import test01.Player;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -6,10 +9,10 @@ import java.awt.event.KeyEvent;
 
 public class BubbleFrame extends JFrame implements Runnable{
 
-    private Player player; // 연관관계
+    private test01.Player player; // 연관관계
     private JLabel backGroundMap;
     private final int MOVE_POINT = 10;
-    private Enemy enemy;
+    private test01.Enemy enemy;
 
 
 

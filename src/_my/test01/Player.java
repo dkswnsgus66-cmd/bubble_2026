@@ -1,4 +1,6 @@
-package test_01;
+package _my.test01;
+
+import test01.Moveable;
 
 import javax.swing.*;
 
