@@ -1,7 +1,18 @@
-package test06;
+package bubble;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.swing.*;
+
+@Data
+
+@Getter
+@Setter
+@ToString
+
 
 public class Player extends JLabel implements Moveable {
 
@@ -39,82 +50,12 @@ public class Player extends JLabel implements Moveable {
         this.rightWallCrash = rightWallCrash;
     }
 
-    // getter
-
-    @Override
-    public int getY() {
-        return y;
-    }
-
-    @Override
-    public int getX() {
-        return x;
-    }
-
-    public boolean isLeft() {
-        return left;
-    }
-
-    public boolean isRight() {
-        return right;
-    }
-
-    public boolean isUp() {
-        return up;
-    }
-
-    public boolean isDown() {
-        return down;
-    }
-
-    public boolean isLeftWallCrash() {
-        return leftWallCrash;
-    }
-
-    public boolean isRightWallCrash() {
-        return rightWallCrash;
-    }
-
-    public PlayerWay getPlayerWay() {
-        return playerWay;
-    }
-
-//setter
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public void setDown(boolean down) {
-        this.down = down;
-    }
-
-    public void setUp(boolean up) {
-        this.up = up;
-    }
-
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
-
-    public void setPlayerWay(PlayerWay playerWay) {
-        this.playerWay = playerWay;
-    }
 
     public Player() {
         initData();
         setInitLayout();
     }
 
-    //setter
 
     private void initData() {
         playerR = new ImageIcon("img/playerR.png");
@@ -184,7 +125,7 @@ public class Player extends JLabel implements Moveable {
     @Override
     public void up() {
         // 점프 기능을 어떻게 구현할까?
-        if(up) {
+        if (up) {
             return;
         }
         up = true;
@@ -212,11 +153,11 @@ public class Player extends JLabel implements Moveable {
 
 
     /**
-     *  낙하 변경(중력)
-     *  for -> while(down) 으로 변경
-     *  while(true) --> (down)
-     *  BackgroundPlayerService 바닥감지
-     *  setDown(false) 호출 --> down 상태값을 false 변경 한다면 while(down) 이 종료 -> 낙하 종료
+     * 낙하 변경(중력)
+     * for -> while(down) 으로 변경
+     * while(true) --> (down)
+     * BackgroundPlayerService 바닥감지
+     * setDown(false) 호출 --> down 상태값을 false 변경 한다면 while(down) 이 종료 -> 낙하 종료
      */
     @Override
     public void down() {
@@ -224,9 +165,9 @@ public class Player extends JLabel implements Moveable {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (down){
+                while (down) {
                     y += JUMP_SPEED;
-                    setLocation(x,y);
+                    setLocation(x, y);
                     try {
                         Thread.sleep(3);
                     } catch (InterruptedException e) {
