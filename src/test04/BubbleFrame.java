@@ -13,8 +13,8 @@ public class BubbleFrame extends JFrame {
         initData();
         setInitLayout();
         addEventListener();
-        // 충돌감지 백그라운드 서비스 시작
-        new Thread(new BackGroundPlayService(player)).start();
+        // 충돌 감지 백그라운드 서비스 시작
+        new Thread(new BackgroundPlayerService(player)).start();
     }
 
     private void initData() {
@@ -56,22 +56,39 @@ public class BubbleFrame extends JFrame {
                 // 방향키 코드를 Player의 이동 메서드 연결
                 switch (e.getKeyCode()){
                     case KeyEvent.VK_LEFT:
-                        // 이동 중이 아니고 AND 벽에 충돌하지 않은상태 일때문 left 메서드 호출
-                        if(player.isLeft() == false && player.isLeftWallCrash() == false){
+                        // 이동중이 아니고 벽에 충돌하지 않은 상태일 때만 left() 메서드 호출
+                        if (player.isLeft() == false && player.isLeftWallCrash() == false){
                             player.left();
                         }
                         break;
                     case KeyEvent.VK_RIGHT:
-                        if(player.isLeft() == false && player.isLeftWallCrash() == false){
+                        // 이동중이 아니고 벽에 충돌하지 않은 상태일 때만 left() 메서드 호출
+                        if(player.isRight() == false && player.isRightWallCrash() == false){
                             player.right();
                         }
                         break;
                     case KeyEvent.VK_UP:
                         player.up();
                         break;
+                    case KeyEvent.VK_SPACE:
+                        // 버블 생성
+                        fireBubble();
+                        break;
+
                 }
             }
         });
+    }
+
+    //todo 임시 버블 클래스 생성
+    private void fireBubble () {
+        Bubble bubble = new Bubble(player);
+        backgroundMap.add(bubble);
+        // 동적으로 컴포넌트가 그려지기에 버그 발생 가능
+        backgroundMap.revalidate(); // 레이아웃 재계산
+        backgroundMap.repaint(); // 다시 그림
+
+
     }
 
     public static void main(String[] args) {

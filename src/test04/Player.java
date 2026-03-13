@@ -1,5 +1,6 @@
 package test04;
 
+
 import javax.swing.*;
 
 public class Player extends JLabel implements Moveable {
@@ -17,7 +18,7 @@ public class Player extends JLabel implements Moveable {
     private final int JUMP_SPEED = 2;      // 점프/낙하 속도
     private final int JUMP_HEIGHT = 130;   // 점프 최대 높이
 
-    // 이동 상태 플래그
+    // 이동 상태 플래스
     // true = 해당 방향으로 이동 중 (while 루프 조건)
     // false = 멈춤 (while 루프 탈출 -> Thread 종료)
     private boolean left = false;
@@ -25,18 +26,30 @@ public class Player extends JLabel implements Moveable {
     private boolean up = false;
     private boolean down = false;
 
-    // 벽충돌 상태 플래그
+    // 벽 충돌 상태 플래그
     private boolean leftWallCrash;
     private boolean rightWallCrash;
 
-    /// getter
-
-    public int getx(){
-        return x;
+    public void setLeftWallCrash(boolean leftWallCrash) {
+        this.leftWallCrash = leftWallCrash;
     }
-    public int gety(){
+
+    public void setRightWallCrash(boolean rightWallCrash) {
+        this.rightWallCrash = rightWallCrash;
+    }
+
+    // getter
+
+    @Override
+    public int getY() {
         return y;
     }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
     public boolean isLeft() {
         return left;
     }
@@ -53,8 +66,6 @@ public class Player extends JLabel implements Moveable {
         return down;
     }
 
-
-
     public boolean isLeftWallCrash() {
         return leftWallCrash;
     }
@@ -62,22 +73,9 @@ public class Player extends JLabel implements Moveable {
     public boolean isRightWallCrash() {
         return rightWallCrash;
     }
-    /// setter
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
 
-    public void setRight(boolean right) {
-        this.right = right;
-    }
 
-    public void setUp(boolean up) {
-        this.up = up;
-    }
-
-    public void setDown(boolean down) {
-        this.down = down;
-    }
+    //setter
 
     public void setX(int x) {
         this.x = x;
@@ -86,21 +84,29 @@ public class Player extends JLabel implements Moveable {
     public void setY(int y) {
         this.y = y;
     }
-// BubbleFrame 의 Key 이벤트에서 호출할 수 있도록 setter 설정
 
-
-    public void setLeftWallCrash(boolean leftWallCrash) {
-        this.leftWallCrash = leftWallCrash;
+    public void setDown(boolean down) {
+        this.down = down;
     }
 
-    public void setRightWallCrash(boolean rightWallCrash) {
-        this.rightWallCrash = rightWallCrash;
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+    public void setLeft(boolean left) {
+        this.left = left;
     }
 
     public Player() {
         initData();
         setInitLayout();
     }
+
+    //setter
 
     private void initData() {
         playerR = new ImageIcon("img/playerR.png");
@@ -169,27 +175,31 @@ public class Player extends JLabel implements Moveable {
 
     @Override
     public void up() {
-        if(up){
-            return; // 한번만 쓰레드 생성하기 위한 장치 쓰레드를 생성해서  for문으로 65번 동작중인데 거기에 또 입력해서 새로운 쓰레드를 생성하여 65번 실행하기에 기존 실행되는 쓰레드에
-            // 새로운 쓰레드가 얹어져서 스피드가 빨라지는것 이는 return; 을 하면서 새로운 쓰레드 생성 방지
+        // 점프 기능을 어떻게 구현할까?
+        if(up) {
+            return;
         }
         up = true;
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //JUMP_HEIGHT/SPEED 130 / 2 -> 65번 반복 65픽셀 업
-                for(int i =0; i < JUMP_HEIGHT/SPEED; i++){
+                // 130 / 2 --> 65 반복 65 픽셀 업
+                for (int i = 0; i < JUMP_HEIGHT / JUMP_SPEED; i++) {
                     y = y - JUMP_SPEED;
+                    setLocation(x, y);
                     try {
-                        Thread.sleep(5); // 5ms 간격 낙하보다 느리게 설정 낙하는 3ms
+                        Thread.sleep(5); // 5ms 간격 (낙하 보다 느리게 설정 낙하 3ms )
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
-                up = false; // 최고점 도달 하고 점프 상태 해제
-                down(); // 자동 낙하시작
+                up = false; // 최고점 도달 하고 -> 점프 상태 해제
+                down(); // 자동 낙하 시작
             }
         }).start();
+
+
     }
 
     @Override
@@ -198,16 +208,19 @@ public class Player extends JLabel implements Moveable {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for(int i =0; i < JUMP_HEIGHT/SPEED; i++){
+                for (int i = 0; i < JUMP_HEIGHT / JUMP_SPEED; i++) {
                     y = y + JUMP_SPEED;
+                    setLocation(x, y);
                     try {
-                        Thread.sleep(3); // 5ms 간격 낙하보다 느리게 설정 낙하는 3ms
+                        Thread.sleep(3); // 5ms 간격 (낙하 보다 느리게 설정 낙하 3ms )
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
                 down = false;
             }
+
         }).start();
+
     }
 }

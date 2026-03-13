@@ -1,11 +1,8 @@
 package test04;
 
 public interface Moveable {
-
-    void left(); // 추상 메서드 생략
+    void left();
     void right();
     void up();
     void down();
-
-
 }
