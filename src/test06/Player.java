@@ -27,9 +27,10 @@ public class Player extends JLabel implements Moveable {
     private boolean down = false;
 
     // 벽 충돌 상태 플래그
-    private boolean leftWallCrash;
-    private boolean rightWallCrash;
+    private boolean leftWallCrash = false;
+    private boolean rightWallCrash = false;
     private PlayerWay playerWay = PlayerWay.RIGHT;
+    private PlayerWay playerWayL = PlayerWay.LEFT;
 
     public void setLeftWallCrash(boolean leftWallCrash) {
         this.leftWallCrash = leftWallCrash;

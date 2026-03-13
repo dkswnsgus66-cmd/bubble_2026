@@ -41,24 +41,28 @@ public class BackgroundPlayerService implements Runnable {
             Color leftColor = new Color(image.getRGB(player.getX(), player.getY() + 25));
             Color rightColor = new Color(image.getRGB(player.getX() + 60, player.getY() + 25));
             // 바닥층 감지 좌표 (플레이어 발 아래 두정)
-            int bottomLeft = image.getRGB(player.getX() + 20, player.getY() + 55);
+            // 감지하는 센서 같은 역할 오른쪽 좌표 왼쪽좌표 둘다 지정 공룡의 JLabel의 크기가 50이라 이렇게 설정
+            int bottomLeft = image.getRGB(player.getX() + 20, player.getY() + 55);// Label안쪽의 좌표를 설정 해당 좌표로 이동시켜 색깔이 다른 지점 (발판) 에 붙이기 위한것
             int bottomRight = image.getRGB(player.getX() + 50, player.getY() + 55);
+
             System.out.println("bottomLefte: " + bottomLeft);
             System.out.println("bottomRight: " + bottomRight);
-            if(bottomLeft + bottomRight == -2){ // => 허공 상태
-                 // 계속 낙하 시킬 예정
+            if (bottomLeft + bottomRight == -2) { // => 허공 상태  backgroundMapService 사진을 보면 하공은 전부 -1 인 정수값을 가지는 공간이다
+                // 근데 오른쪽 왼쪽 감지하는 픽셀 2개가 있다 오른쪽 왼쪽 둘다 허공에 있을대 내려가야 하기 때문에 -2 를 넣어준것이다
+                // 계속 낙하 시킬 예정
                 // 발 아래가 허공 -> 아직 점프중 이거나 / 낙하
 
-                if(player.isUp() == false && player.isDown() == false){
+                if (player.isUp() == false && player.isDown() == false) {
                     // player.isUp() == false 점프중이 아님
                     // player.isDown() == false 낙하 중이 아님
                     player.down(); // 쓰레드로 인한 가속 방지 1번호출
 
-                }else {
-                    // 발 아래가 바닥/ 층 -> 낙하 즉시 중단
-                    player.setDown(false); // while(false) --> false -> while 종료 , Thread 종료
-                    // 멤버변수 down에 false 삽입
                 }
+
+            } else {
+                // 발 아래가 바닥/ 층 -> 낙하 즉시 중단
+                player.setDown(false); // while(false) --> false -> while 종료 , Thread 종료
+                // 멤버변수 down에 false 삽입
             }
             // 정수값이 -1 이면 흰색
             // 정수값이 -65536 이면 빨간색

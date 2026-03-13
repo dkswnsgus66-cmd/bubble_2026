@@ -40,15 +40,10 @@ public class Player extends JLabel implements Moveable {
     // 벽 충돌 상태 플래그
     private boolean leftWallCrash;
     private boolean rightWallCrash;
-    private PlayerWay playerWay = PlayerWay.RIGHT;
+    private PlayerWay playerWay; // enum 클래스는 단지 데이터를 분류하기 위한것이다
+    // 그냥 종류 분류 그러면 이게 오른쪽 상태인지 왼쪽 상태인지 값을 멤버변수에 넣는다
 
-    public void setLeftWallCrash(boolean leftWallCrash) {
-        this.leftWallCrash = leftWallCrash;
-    }
 
-    public void setRightWallCrash(boolean rightWallCrash) {
-        this.rightWallCrash = rightWallCrash;
-    }
 
 
     public Player() {
@@ -68,6 +63,7 @@ public class Player extends JLabel implements Moveable {
         y = 535;
         setSize(50, 50);
         setIcon(playerR); // 초기 방향 설정
+        playerWay = PlayerWay.RIGHT;
         setLocation(x, y);
     }
 
@@ -77,6 +73,7 @@ public class Player extends JLabel implements Moveable {
         if (left) {
             return;  // 이미 이동 중이면 중복 Thread 생성 방지
         }
+        playerWay = PlayerWay.LEFT; // 플레이어가 왼쪽을 볼때 PlayerWay.LEFT; 라는 분류를 넣는다
         left = true;
         setIcon(playerL);
 
@@ -103,6 +100,7 @@ public class Player extends JLabel implements Moveable {
         if (right) {
             return;
         }
+        playerWay = PlayerWay.RIGHT;// 플레이어가 오른쪽을 볼때 PlayerWay.RIGHT; 라는 분류를 넣는다
         right = true;
         setIcon(playerR);
 

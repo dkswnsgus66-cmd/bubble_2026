@@ -22,6 +22,9 @@ public class Bubble extends JLabel implements Moveable {
     private boolean rightMoving = false;
     private boolean upMoving = false;
 
+    private boolean LeftWallCrash = false;
+    private boolean RightWallCrash = false;
+
 
 
     public Bubble(Player player) {
@@ -39,9 +42,9 @@ public class Bubble extends JLabel implements Moveable {
             @Override
             public void run() {
                 if (player.getPlayerWay() == PlayerWay.LEFT) {
+                    // 그리고 player.left가 동작했으니 getPlayerWay() 에는PlayerWay.LEFT가 들어가있으니 조건충족 PlayerWay.LEFT enum 은 기능은 따로없고 판별을 위한 문법일 뿐이다
                     left(); // 왼쪽 으로 400픽셀 이동 완료후 --> up()호출
-
-                } else {
+                } else { // 여기 동작이 안된다
                     right(); // 오른쪽 으로 400픽셀 이동 완료후 --> up()호출
                 }
             }
@@ -66,7 +69,7 @@ public class Bubble extends JLabel implements Moveable {
     @Override
     public void left() {
         leftMoving = true;
-        for (int i = 0; i < HORIZONTAL_DISTANCE; i++) {
+        for (int i = 0; i < HORIZONTAL_DISTANCE; i++) { // 사거리 만큼 for문
             x--;
             setLocation(x, y);
             try {
@@ -75,7 +78,7 @@ public class Bubble extends JLabel implements Moveable {
                 throw new RuntimeException(e);
             }
         }
-        leftMoving = false;
+        leftMoving = false; // for 문 끝난후 false 반환
         up(); // 수평이동 완료후 상승시작
     }
 

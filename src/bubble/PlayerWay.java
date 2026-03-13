@@ -18,3 +18,4 @@ package bubble;
 public enum PlayerWay { // 범위를 지정한다
     LEFT, RIGHT
 }
+

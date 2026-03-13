@@ -8,6 +8,7 @@ public class BubbleFrame extends JFrame {
 
     private JLabel backgroundMap;
     private Player player;
+    private Bubble bubble;
 
     public BubbleFrame() {
         initData();
@@ -15,6 +16,8 @@ public class BubbleFrame extends JFrame {
         addEventListener();
         // 충돌 감지 백그라운드 서비스 시작
         new Thread(new BackgroundPlayerService(player)).start();
+        new Thread(new BackgroundBubbleService(bubble)).start();
+
     }
 
     private void initData() {

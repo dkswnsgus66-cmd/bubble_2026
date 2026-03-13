@@ -43,7 +43,7 @@ public class BubbleFrame extends JFrame {
             public void keyReleased(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
-                        player.setLeft(false);
+                        player.setLeft(false); // 키를 손에서 때면 멈추게 만듬
                         break;
                     case KeyEvent.VK_RIGHT:
                         player.setRight(false);
