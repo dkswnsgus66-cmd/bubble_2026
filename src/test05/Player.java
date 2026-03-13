@@ -1,7 +1,5 @@
-package test04;
+package test05;
 
-
-import test05.PlayerWay;
 
 import javax.swing.*;
 
@@ -31,16 +29,7 @@ public class Player extends JLabel implements Moveable {
     // 벽 충돌 상태 플래그
     private boolean leftWallCrash;
     private boolean rightWallCrash;
-
-    /**
-     * 플레이어 현재 방향(enum 타입)
-     * - left() -> PlayerWay.LEFT 변경
-     * - right() -> PlayerWay.RIGHT 변경
-     */
-
     private PlayerWay playerWay;
-
-
 
     public void setLeftWallCrash(boolean leftWallCrash) {
         this.leftWallCrash = leftWallCrash;
@@ -49,9 +38,6 @@ public class Player extends JLabel implements Moveable {
     public void setRightWallCrash(boolean rightWallCrash) {
         this.rightWallCrash = rightWallCrash;
     }
-
-
-
 
     // getter
 
@@ -89,8 +75,11 @@ public class Player extends JLabel implements Moveable {
         return rightWallCrash;
     }
 
+    public PlayerWay getPlayerWay() {
+        return playerWay;
+    }
 
-    //setter
+//setter
 
     public void setX(int x) {
         this.x = x;
@@ -114,6 +103,10 @@ public class Player extends JLabel implements Moveable {
 
     public void setLeft(boolean left) {
         this.left = left;
+    }
+
+    public void setPlayerWay(PlayerWay playerWay) {
+        this.playerWay = playerWay;
     }
 
     public Player() {
@@ -143,7 +136,6 @@ public class Player extends JLabel implements Moveable {
         if (left) {
             return;  // 이미 이동 중이면 중복 Thread 생성 방지
         }
-        playerWay = playerWay.LEFT;
         left = true;
         setIcon(playerL);
 
@@ -170,7 +162,6 @@ public class Player extends JLabel implements Moveable {
         if (right) {
             return;
         }
-        playerWay = playerWay.RIGHT;
         right = true;
         setIcon(playerR);
 
